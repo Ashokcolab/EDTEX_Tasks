@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .patron-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+  }
+
+  .patron-form h2 {
+    margin-top: 0;
+  }
+
+  .patron-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+
+  .patron-form input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .patron-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+  }
+
+  .patron-form button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .patron-form button:hover {
+    background-color: #0056b3;
+  }
+</style>
+<title>Add New Patron</title>
+</head>
+<body>
+  <div class="patron-form">
+    <h2>Add New Patron</h2>
+    <form #ngForm="ngForm"  nonvalidate>
+      <label for="id">ID</label>
+      <input type="text" id="id" #id="ngModel" name="id" class="form-control" ngModel  required (ngModelChange)="onid()" [(ngModel)]="patobj.id">
+      <small *ngIf="showid"><p style="color:red">id should contain digits</p></small>
+      <label for="name">Name</label>
+      <input type="text" id="name" #name="ngModel" name="name" ngModel class="form-control" required [(ngModel)]="patobj.pname" (ngModelChange)="onname()">
+      <small *ngIf="showname"><p style="color: red;">name can contain alpanumeric**</p></small>
+      <label for="borrowed_books">Borrowed Books (A collection of books)</label>
+      <textarea id="borrowed_books" ngModel class="form-control" name="borrowed_books" rows="4"></textarea>
+
+      <button (click)="onadd()" routerLink="/navpage" [disabled]="ngForm.invalid" type="submit">Add Patron</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    animation: backgroundAnimation 20s infinite alternate;
+  }
+
+  @keyframes backgroundAnimation {
+    0% {
+      background-image: url('https://images2.minutemediacdn.com/image/upload/c_crop,h_842,w_1500,x_0,y_0/v1554998553/shape/mentalfloss/istock-539673956.jpg?itok=SEp2hYiF');
+      background-position: center 0;
+    }
+    25% {
+      background-image: url('https://img.theculturetrip.com/wp-content/uploads/2017/01/d18e1j.jpg');
+      background-position: center 15%;
+    }
+    50% {
+      background-image: url('https://onbites.com/wp-content/uploads/2017/06/library-10.jpg');
+      background-position: center 30%;
+    }
+    75% {
+      background-image: url('https://images2.minutemediacdn.com/image/upload/c_crop,h_842,w_1500,x_0,y_0/v1554998553/shape/mentalfloss/istock-539673956.jpg?itok=SEp2hYiF');
+      background-position: center 45%;
+    }
+    100% {
+      background-image: url('https://images2.minutemediacdn.com/image/upload/c_crop,h_842,w_1500,x_0,y_0/v1554998553/shape/mentalfloss/istock-539673956.jpg?itok=SEp2hYiF');
+      background-position: center 60%;
+    }
+  }
+  .buttons {
+    text-align: center;
+  }
+
+  .buttons button {
+    background-color: #ffffff;
+    color: #333;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    margin: 0 10px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .buttons button:hover {
+    background-color: #f2f2f2;
+  }
+  .welcome-text {
+    text-align: center;
+    display: block;
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+</style>
+<title>Home Page</title>
+</head>
+<body>
+    <!-- <div class="welcome-text">Welcome to Library Management System</div> -->
+  <div class="buttons">
+    <button routerLink="/registration">Register</button>
+    <button routerLink="/login">Login</button>
+  </div>
+</body>
+</html> 

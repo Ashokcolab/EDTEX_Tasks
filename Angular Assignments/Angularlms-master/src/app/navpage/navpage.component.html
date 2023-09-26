@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  header {
+    background-color: #333;
+    /* margin-top: 80px; */
+    color: #fff;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  nav {
+    display: flex;
+    gap: 20px;
+  }
+
+  nav a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+  }
+
+  .logout {
+    cursor: pointer;
+  }
+</style>
+<title>Library Management System</title>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+       
+        <a routerLink="/book-list">Book List</a>
+        <a routerLink="/patron-list">Patron List</a>
+        <a routerLink="/addbook">Add Book</a>
+        <a routerLink="/addpatron">Add Patron</a>
+        <a routerLink="/borrowbook">Borrow Book</a>
+        <a routerLink="/returnbook">Return Book</a>
+        <div class="user">
+          <span class="username"><a routerLink="/updateb">Hii{{" "}}{{userName}}</a></span>
+          <span routerLink="/home" class="logout">Log Out</span>
+        </div>
+      </nav>
+    </div>
+  </header>
+<div class="container">
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh5_-oF_80hjU7UuJQS9IrgX_7bjOqpTlR5ADVsdHv0TCoSGgrGSf7_vtob_Lh8qFfq9iZdQgVnTcFZhsViC79CadxPp3MseRRbRmg8XYZcqCEU55YTDfoL8htLZQTpobCCQfU5GYBc9dw5rImKnVChmAhOpOlArqK7a9fe1MW_UJjFHTVM6g4FNxDbSQ/s2048/Stockholm%20public%20library%202.jpeg" alt="Library" style="max-width: 100%; max-height: calc(100vh - 60px); width: 100%;">
+  </div>
+  
+</body>
+</html>
+<router-outlet></router-outlet>
