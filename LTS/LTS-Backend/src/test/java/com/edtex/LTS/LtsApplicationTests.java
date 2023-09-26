@@ -108,11 +108,11 @@ public class LtsApplicationTests {
     public void shouldapply_on_reamining_leaves() {
     	Leav leave=new Leav();
     	leave.setEmail("ashok@edtex.in");
-    	leave.setEndDate("tomorror");
+    	leave.setEndDate("2023-09-29T11:08");
     	leave.setManagerReason("");
     	leave.setName("ashok");
     	leave.setReason("sick");
-    	leave.setStartDate("today");
+    	leave.setStartDate("2023-09-26T11:08");
     	leave.setStatus("pending");
     	leave.setType("sick");
     	ResponseEntity<Object>response=restTemplate.postForEntity("/apply-leave", leave,Object.class);
@@ -125,11 +125,11 @@ public class LtsApplicationTests {
     public void shouldnotapply_on_reamining_leaves() {
     	Leav leave=new Leav();
     	leave.setEmail("ashoknelauri55@gmail.com");
-    	leave.setEndDate("tomorror");
+    	leave.setEndDate("2023-09-29T11:08");
     	leave.setManagerReason("");
     	leave.setName("ashok");
     	leave.setReason("sick");
-    	leave.setStartDate("today");
+    	leave.setStartDate("2023-09-26T11:08");
     	leave.setStatus("pending");
     	leave.setType("sick");
     	ResponseEntity<Object>response=restTemplate.postForEntity("/apply-leave", leave,Object.class);
@@ -207,11 +207,11 @@ public class LtsApplicationTests {
  public void cansae() {
 	 Leav leave=new Leav();
  	leave.setEmail("ben@edtex.in");
- 	leave.setEndDate("tomorror");
+ 	leave.setEndDate("2023-09-29T11:08");
  	leave.setManagerReason("");
  	leave.setName("ashok");
  	leave.setReason("marriage");
- 	leave.setStartDate("today");
+ 	leave.setStartDate("2023-09-26T11:08");
  	leave.setStatus("pending");
  	leave.setType("sick");
 	 ResponseEntity<Object>response=restTemplate.postForEntity("/save",leave , Object.class);
