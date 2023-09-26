@@ -178,11 +178,45 @@ public class LtsApplicationTests {
  }
  @Test
  @DisplayName("cant delete leave with id not equals pending")
-// @Disabled
+ @Disabled
  public void delete_leave_by_id_notequals_pending() {
 	 ResponseEntity<Object>response=restTemplate.exchange("/delete-leave/29",HttpMethod.DELETE, null, Object.class);
 	 assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
  }
 //---------------------------------------------------------------------------------------------------
- //---------------------
+ //--------------------Test for Number of UPDATE NUMBE OF LEAVES BY MANAGER-------------------------
+ @Test
+ @DisplayName("can update if everyone's accepted count is less than count")
+ @Disabled
+ public void canupdate() {
+	 ResponseEntity<Object>response=restTemplate.exchange("/numberofleaves/5", HttpMethod.PUT, null, Object.class);
+     assertEquals(HttpStatus.OK,response.getStatusCode());
+ }
+ @Test
+ @DisplayName("cant update if everyone's accepted count is greater than count")
+ @Disabled
+ public void cantupdate() {
+	 ResponseEntity<Object>response=restTemplate.exchange("/numberofleaves/2", HttpMethod.PUT, null, Object.class);
+     assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+ }
+//-------------------------------------------------------------------------------------------------------
+//----------------------------------Test for saving leave after edit by employee---------------------------
+ @Test
+ @DisplayName("cansave")
+ @Disabled
+ public void cansae() {
+	 Leav leave=new Leav();
+ 	leave.setEmail("ben@edtex.in");
+ 	leave.setEndDate("tomorror");
+ 	leave.setManagerReason("");
+ 	leave.setName("ashok");
+ 	leave.setReason("marriage");
+ 	leave.setStartDate("today");
+ 	leave.setStatus("pending");
+ 	leave.setType("sick");
+	 ResponseEntity<Object>response=restTemplate.postForEntity("/save",leave , Object.class);
+	 assertEquals(HttpStatus.OK, response.getStatusCode());
+ }
+ //----------------------------------------------------------------------------------------------------
+ 
 }
