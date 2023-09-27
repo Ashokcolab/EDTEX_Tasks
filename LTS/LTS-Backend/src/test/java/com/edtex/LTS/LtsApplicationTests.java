@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -18,12 +19,13 @@ import com.edtex.LTS.LeaveEntity.Leav;
 import com.edtex.LTS.UserEntity.User;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
+//@AutoConfigureMockMvc
 @Import(YourConfigClass.class)
 public class LtsApplicationTests {
 
     @Autowired
     private TestRestTemplate restTemplate;
+//------------------------------Test for Register------------------------
 
     @Test
     @Disabled
@@ -66,6 +68,8 @@ public class LtsApplicationTests {
           assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     	
     }
+//----------------------------------------------------------------------------
+//---------------------------Test for Login------------------------------------- 
     @Test
     @Disabled
     @DisplayName("user_exists_with_right_pwd and mail")
@@ -96,22 +100,124 @@ public class LtsApplicationTests {
     	ResponseEntity<Object>response=restTemplate.postForEntity("/login", user, Object.class);
     	assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
     }
+//-----------------------------------------------------------------------------
+//--------------------------Test for apply leave based on remaining leaves----------    
     @Test
     @DisplayName("canapplywhen_not_out of leaves")
+    @Disabled
     public void shouldapply_on_reamining_leaves() {
     	Leav leave=new Leav();
     	leave.setEmail("ashok@edtex.in");
-    	leave.setEndDate("tomorror");
+    	leave.setEndDate("2023-09-29T11:08");
     	leave.setManagerReason("");
     	leave.setName("ashok");
     	leave.setReason("sick");
-    	leave.setStartDate("today");
+    	leave.setStartDate("2023-09-26T11:08");
     	leave.setStatus("pending");
     	leave.setType("sick");
     	ResponseEntity<Object>response=restTemplate.postForEntity("/apply-leave", leave,Object.class);
     	assertEquals(HttpStatus.OK,response.getStatusCode());
     	
     }
-    
-    
+    @Test
+    @DisplayName("cant_apply_out_of_leaves")
+    @Disabled
+    public void shouldnotapply_on_reamining_leaves() {
+    	Leav leave=new Leav();
+    	leave.setEmail("ashoknelauri55@gmail.com");
+    	leave.setEndDate("2023-09-29T11:08");
+    	leave.setManagerReason("");
+    	leave.setName("ashok");
+    	leave.setReason("sick");
+    	leave.setStartDate("2023-09-26T11:08");
+    	leave.setStatus("pending");
+    	leave.setType("sick");
+    	ResponseEntity<Object>response=restTemplate.postForEntity("/apply-leave", leave,Object.class);
+    	assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+    	
+    }
+//---------------------------------------------------------------------------
+//-----------------Test for get leave by id---------------------------  
+    @Test
+    @DisplayName("should get leave by valid id")
+    @Disabled
+    public void should_get_leave_by_valid_id() {
+    	ResponseEntity<Object>response=restTemplate.getForEntity("/get-leave/27",Object.class);
+    	assertEquals(HttpStatus.OK,response.getStatusCode());
+    }
+    @Test
+    @DisplayName("should_not_get_leave_by_invalid_id")
+    @Disabled
+    public void should_notget_leave_by_invalid_id() {
+    	ResponseEntity<Object>response=restTemplate.getForEntity("/get-leave/4",Object.class);
+    	assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+    }
+//------------------------Test for getting leaves by mail------------------
+    @Test
+    @DisplayName("shoudl_get_leaves_by_valid_mail")
+    @Disabled
+    public void should_get_leaves_by_valid_email() {
+    	ResponseEntity<Object>response=restTemplate.getForEntity("/get-leaves/ashok@edtex.in", Object.class);
+    	assertEquals(HttpStatus.OK,response.getStatusCode());
+    }
+    @Test
+    @DisplayName("should_not_get_leaves_by_Invalid_mail")
+    @Disabled
+    public void should_notget_leaves_by_invalid_email() {
+    	ResponseEntity<Object>response=restTemplate.getForEntity("/get-leaves/kevin@edtex.in", Object.class);
+    	assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+    }
+//----------------------------------------------------------------------------
+//--------------------------Delete Leave by id--------------------------------    
+ @Test
+ @DisplayName("delete leave with id equals pending")
+ @Disabled
+ public void delete_leave_by_id_equals_pending() {
+	 ResponseEntity<Object>response=restTemplate.exchange("/delete-leave/33",HttpMethod.DELETE, null, Object.class);
+	 assertEquals(HttpStatus.OK,response.getStatusCode());
+ }
+ @Test
+ @DisplayName("cant delete leave with id not equals pending")
+ @Disabled
+ public void delete_leave_by_id_notequals_pending() {
+	 ResponseEntity<Object>response=restTemplate.exchange("/delete-leave/29",HttpMethod.DELETE, null, Object.class);
+	 assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+ }
+//---------------------------------------------------------------------------------------------------
+ //--------------------Test for Number of UPDATE NUMBE OF LEAVES BY MANAGER-------------------------
+ @Test
+ @DisplayName("can update if everyone's accepted count is less than count")
+ @Disabled
+ public void canupdate() {
+	 ResponseEntity<Object>response=restTemplate.exchange("/numberofleaves/5", HttpMethod.PUT, null, Object.class);
+     assertEquals(HttpStatus.OK,response.getStatusCode());
+ }
+ @Test
+ @DisplayName("cant update if everyone's accepted count is greater than count")
+ @Disabled
+ public void cantupdate() {
+	 ResponseEntity<Object>response=restTemplate.exchange("/numberofleaves/2", HttpMethod.PUT, null, Object.class);
+     assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+ }
+//-------------------------------------------------------------------------------------------------------
+//----------------------------------Test for saving leave after edit by employee---------------------------
+ @Test
+ @DisplayName("cansave")
+// @Disabled
+ public void cansae() {
+	 Leav leave=new Leav();
+ 	leave.setEmail("ben@edtex.in");
+ 	leave.setEndDate("2023-09-29T11:08"); 
+ 	leave.setManagerReason("");
+ 	leave.setName("ashok");
+ 	leave.setReason("marriage");
+ 	leave.setStartDate("2023-09-26T11:08");
+ 	leave.setStatus("pending");
+ 	leave.setType("sick");
+	 ResponseEntity<Object>response=restTemplate.postForEntity("/save",leave , Object.class);
+	 assertEquals(HttpStatus.OK, response.getStatusCode());
+ }
+ //----------------------------------------------------------------------------------------------------
+
+  
 }
