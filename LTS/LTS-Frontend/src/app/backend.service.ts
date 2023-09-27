@@ -49,6 +49,8 @@ export class BackendService {
     return this.http.patch<any>(`http://localhost:9090/reject/${id}`,message);
    }
    onUpdate(leaves:Number):Observable<any>{
+    console.log(leaves);
+    
     return this.http.post<any>(`http://localhost:9090/numberofleaves/${leaves}`,null);
    }
 
