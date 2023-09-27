@@ -25,6 +25,7 @@ public class Usercontroller {
 	private userrepo urepo;
 	@PostMapping("/register")
 	public ResponseEntity<Object> register(@RequestBody User user) {
+		System.out.println(user);
 		if(!urepo.existsById(user.getEmail())) {
 			user.setNumberOfLeaves(0);
 			urepo.save(user);
@@ -35,7 +36,7 @@ public class Usercontroller {
 		registro.put("user", user);
 		registro.put("status",HttpStatus.BAD_REQUEST);
 		registro.put("message", "user already exists");
-		return ResponseEntity.badRequest().body(registro);
+		return ResponseEntity.ok(registro);
 	}
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody User user) {
@@ -51,18 +52,18 @@ public class Usercontroller {
 				}else {
 					registro.put("status", HttpStatus.NOT_ACCEPTABLE);
 					registro.put("message", "incorrect password");
-					return ResponseEntity.badRequest().body(registro);
+					return ResponseEntity.ok(registro);
 				}
 			}else {
 				registro.put("status", HttpStatus.NOT_ACCEPTABLE);
 		        registro.put("message", "user not exist");
-				return ResponseEntity.badRequest().body(registro);
+		        return ResponseEntity.ok(registro);
 			}
 			
 		}else {
 			registro.put("status", HttpStatus.NOT_ACCEPTABLE);
 	         registro.put("message", "user not exist");
-			return ResponseEntity.badRequest().body(registro);
+	         return ResponseEntity.ok(registro);
 		}
 		
 	}
