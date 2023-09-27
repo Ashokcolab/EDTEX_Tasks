@@ -53,5 +53,4 @@ export class BackendService {
     
     return this.http.post<any>(`http://localhost:9090/numberofleaves/${leaves}`,null);
    }
-
 }
