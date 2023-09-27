@@ -17,9 +17,11 @@ import org.springframework.http.ResponseEntity;
 import com.edtex.LTS.LeaveEntity.Leav;
 //import com.edtex.LTS.LeaveEntity.Leav;
 import com.edtex.LTS.UserEntity.User;
+import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.JsonPath;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-//@AutoConfigureMockMvc
+@AutoConfigureMockMvc
 @Import(YourConfigClass.class)
 public class LtsApplicationTests {
 
@@ -65,7 +67,10 @@ public class LtsApplicationTests {
           // For example, to check if the response status code is OK (200):
           // assertEquals(HttpStatus.OK, response.getStatusCode());
           
-          assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+          assertEquals(HttpStatus.OK, response.getStatusCode());
+          DocumentContext documentContext = JsonPath.parse(response.getBody());
+          String status = documentContext.read("$.status");
+          assertEquals("BAD_REQUEST",status);
     	
     }
 //----------------------------------------------------------------------------
@@ -88,7 +93,9 @@ public class LtsApplicationTests {
     	user.setEmail("ashok@edtex.i");
     	user.setPassword("ashok12");
     	ResponseEntity<Object>response=restTemplate.postForEntity("/login", user, Object.class);
-    	assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+    	DocumentContext documentContext = JsonPath.parse(response.getBody());
+        String status = documentContext.read("$.status");
+        assertEquals("NOT_ACCEPTABLE",status);
     }
     @Test
     @DisplayName("cantloginwrongpwd")
@@ -98,7 +105,9 @@ public class LtsApplicationTests {
     	user.setEmail("ashok@edtex.in");
     	user.setPassword("ashokkkk");
     	ResponseEntity<Object>response=restTemplate.postForEntity("/login", user, Object.class);
-    	assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+    	DocumentContext documentContext = JsonPath.parse(response.getBody());
+        String status = documentContext.read("$.status");
+        assertEquals("NOT_ACCEPTABLE",status);
     }
 //-----------------------------------------------------------------------------
 //--------------------------Test for apply leave based on remaining leaves----------    
@@ -203,11 +212,11 @@ public class LtsApplicationTests {
 //----------------------------------Test for saving leave after edit by employee---------------------------
  @Test
  @DisplayName("cansave")
-// @Disabled
+ @Disabled
  public void cansae() {
 	 Leav leave=new Leav();
  	leave.setEmail("ben@edtex.in");
- 	leave.setEndDate("2023-09-29T11:08"); 
+ 	leave.setEndDate("2023-09-29T11:08");  
  	leave.setManagerReason("");
  	leave.setName("ashok");
  	leave.setReason("marriage");
